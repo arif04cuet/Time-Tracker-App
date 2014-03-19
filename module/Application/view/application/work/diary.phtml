@@ -1,0 +1,219 @@
+<?php
+$title = 'Work Diary';
+$this->headTitle($title);
+?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', '');
+$form->setAttribute('class', 'form-inline');
+
+$form->prepare();
+echo $this->form()->openTag($form);
+//echo $this->formInput($form->get('id'));
+?>
+<fieldset>
+    <legend><?php echo $title; ?></legend>
+
+    <div class="controls-row placeholder">
+
+	<div class="control-group span2">
+	    <?php $name = $form->get('client'); ?>
+	    <?php echo $this->formLabel($name); ?>
+	    <div class="controls">
+		<?php echo $this->formSelect($name); ?>
+		<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+	    </div>
+	</div>
+
+	<div class="control-group span2">
+	    <?php $name = $form->get('project'); ?>
+	    <?php echo $this->formLabel($name); ?>
+	    <div class="controls">
+		<?php echo $this->formSelect($name); ?>
+		<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+	    </div>
+	</div>
+	<div class="control-group span2">
+	    <?php $name = $form->get('developer'); ?>
+	    <?php echo $this->formLabel($name); ?>
+	    <div class="controls">
+		<?php echo $this->formSelect($name); ?>
+		<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+	    </div>
+	</div>
+	<div class="control-group span2">
+	    <?php $name = $form->get('from'); ?>
+	    <?php echo $this->formLabel($name); ?>
+	    <div class="controls">
+		<?php echo $this->formInput($name); ?>
+		<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+	    </div>
+	</div>
+
+	<div class="control-group span2">
+	    <?php $name = $form->get('to'); ?>
+	    <?php echo $this->formLabel($name); ?>
+	    <div class="controls">
+		<?php echo $this->formInput($name); ?>
+		<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+	    </div>
+	</div>
+
+	<div class="control-group span2">
+	    <?php $name = $form->get('submit'); ?>
+	    <label for="from" class="control-label"></label>
+	    <div class="controls">
+		<?php echo $this->formInput($name); ?>
+		<?php echo $this->formInput($form->get('delete')); ?>
+	    </div>
+	</div>
+
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>
+
+
+<?php if (!empty($this->data)): ?>
+
+    <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">×</a>
+        Showing Records from <strong><?php echo date("d-m-Y", strtotime($this->data['fromDate'])) . '</strong> to <strong> ' . date("d-m-Y", strtotime($this->data['toDate'])) ?></<strong>
+    	    </div>
+
+    	    <form action="<?php echo $this->url('work', array('action' => 'delete')) ?>" method="post">
+    		<div class="block-content">
+    		    <input class="btn btn-danger" type="submit" name="del"  value="Delete"/>
+    		    <div id="container">
+    			<div id="dynamic">
+    			    <table cellpadding="0" cellspacing="0" border="0" class="display table table-striped table-bordered table-condensed datatable" id="datatable">
+    				<thead>
+    				    <tr>
+    					<th><input type="checkbox" name="all" value="all" id="all"/><?php echo $this->translate('Check') ?></th>
+    					<th><?php echo $this->translate('Memo') ?></th>
+    					<th><?php echo $this->translate('startTime') ?></th>
+    					<th><?php echo $this->translate('EndTime') ?></th>
+    					<th><?php echo $this->translate('Image') ?></th>
+    				    </tr>
+    				</thead>
+    				<tbody>
+    				    <tr>
+    					<td colspan="5" class="dataTables_empty">Loading data from server..</td>
+    				    </tr>
+    				</tbody>
+    			    </table>
+    			</div>
+    		    </div>
+    		</div>
+    	    </form>
+    	    <script>
+    		// For validation
+    		jQuery(document).ready(function($) {
+
+    		    $("#del").click(function() {
+    			var result = confirm("Are you Sure");
+    			return result;
+    		    });
+    		    $('#all').click(function() {
+    			var checkboxes = $('#datatable').find('.checkbox');
+    			if ($(this).is(':checked')) {
+    			    checkboxes.attr('checked', 'checked');
+    			} else {
+    			    checkboxes.removeAttr('checked');
+    			}
+    		    });
+    		    //DataTable
+    		    $('table.datatable').dataTable({
+    			"bProcessing": true,
+    			"bDeferRender": true,
+    			"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+    			"sPaginationType": "full_numbers",
+    			//"bServerSide": true,
+    			"oLanguage": {
+    			    "sLengthMenu": '<select>' +
+    				    '<option value="10">10</option>' +
+    				    '<option value="20">20</option>' +
+    				    '<option value="30">30</option>' +
+    				    '<option value="40">40</option>' +
+    				    '<option value="50">50</option>' +
+    				    '<option value="-1">All</option>' +
+    				    '</select>',
+    			    "sSearch": ""
+    			},
+    			"fnServerParams": function(aoData) {
+    			    aoData.push({ "name": "fromDate", "value": "<?php echo $this->data['fromDate'] ?>"});
+    			    aoData.push({ "name": "toDate", "value": "<?php echo $this->data['toDate'] ?>"});
+    			    aoData.push({ "name": "projectId", "value": "<?php echo $this->data['projectId'] ?>"});
+    			    aoData.push({ "name": "developerId", "value": "<?php echo $this->data['developerId'] ?>"});
+    			},
+    			"sAjaxSource": "<?php echo $this->url('ajax', array('action' => 'getDiaryImages')) ?>"
+    		    });
+    		});
+    	    </script>
+
+	    <?php endif; ?>
+
+
+	    <script type="text/javascript">
+		jQuery(document).ready(function($) {
+		    function datePicker()
+		    {
+			$(".date").datepicker();
+		    }
+		    datePicker();
+		    $("form#diary").on('change', 'select.ajax', function() {
+			var value = $(this).val();
+			if (value == '')
+			    return false;
+
+			// setup some local variables
+			var $form = $("form#diary");
+			// let's select and cache all the fields
+			var $inputs = $form.find("input, select, button, textarea");
+			// serialize the data in the form
+			var serializedData = $form.serialize();
+
+			// let's disable the inputs for the duration of the ajax request
+			$inputs.prop("disabled", true);
+
+			// fire off the request to /form.php
+			var request = $.ajax({
+			    dataType: "html",
+			    url: "<?php echo $this->url('ajax', array('action' => 'getDiary')) ?>",
+			    type: "post",
+			    data: serializedData
+			});
+
+			// callback handler that will be called on success
+			request.done(function(response, textStatus, jqXHR) {
+			    $("div.placeholder").empty().html(response);
+			    datePicker();
+			});
+
+			// callback handler that will be called on failure
+			request.fail(function(jqXHR, textStatus, errorThrown) {
+			    // log the error to the console
+			    console.error(
+				    "The following error occured: " +
+				    textStatus, errorThrown
+				    );
+			});
+
+			// callback handler that will be called regardless
+			// if the request failed or succeeded
+			request.always(function() {
+			    // reenable the inputs
+			    $inputs.prop("disabled", false);
+			});
+
+		    });
+
+
+
+
+		});
+
+	    </script>
+	    <style type="text/css">
+		.controls-row [class*="span"] + [class*="span"]{margin-left: 15px}
+		ul.image-list li{display: block;list-style: none}
+	    </style>

@@ -1,0 +1,93 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Time ' . $this->translate('Tracker admin'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                ->prependStylesheet($this->basePath() . '/css/style.css')
+                ->prependStylesheet($this->basePath() . '/css/jquery-ui-1.10.3.custom.min.css')
+                ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        ?>
+
+        <!-- Scripts -->
+        <?php
+        echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/js/jquery-ui-1.10.3.custom.min.js')
+                ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ?>
+
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+
+                    <div class="nav-collapse collapse">
+                        <ul class="nav nav-pills">
+                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                            <?php if ($user = $this->identity()): ?>
+                                <li class=""><a href="<?php echo $this->url('developer-list') ?>"><?php echo $this->translate('Developers') ?></a></li>
+                                <li class=""><a href="<?php echo $this->url('client', array('action' => 'list')) ?>"><?php echo $this->translate('Clients') ?></a></li>
+                                <li class=""><a href="<?php echo $this->url('project', array('action' => 'list')) ?>"><?php echo $this->translate('Projects') ?></a></li>
+                                <li class=""><a href="<?php echo $this->url('work', array('action' => 'diary')) ?>"><?php echo $this->translate('Work diary') ?></a></li>
+
+                                <li ><a class="" style="color:red" href="<?php echo $this->url('logout') ?>"><?php echo $this->translate('Logout') ?></a></li>
+                                <li class="btn btn-primary">Welcome <?php echo $user->getName() ?></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <?php
+        // First get the viewmodel and all its children (ie the actions viewmodel)
+        $children = $this->viewModel()
+                ->getCurrent()
+                ->getChildren();
+
+        $ourView = $children[0];
+        ?>
+
+        <div class="container">
+            <?php if (isset($ourView->flashMessages) && count($ourView->flashMessages)) : ?>
+                <?php foreach ($ourView->flashMessages as $fMessage) : ?>
+                    <?php
+                    $class = end(explode(',', $fMessage));
+                    $class = ($class != 'error') ? 'success' : 'error';
+                    ?>
+                    <div class="alert alert-<?php echo $class ?>">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <?php echo $fMessage ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by Desh IT 24-7 Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+            </footer>
+        </div> <!-- /container -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#cancel").on('click', function(event) {
+                    event.preventDefault();
+                    history.back(1);
+                });
+                $('body').on('click', '.delete,.close', function() {
+                    return confirm("Are you sure want  to do this ?");
+                });
+            });
+        </script>
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

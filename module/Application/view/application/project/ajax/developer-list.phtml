@@ -1,0 +1,12 @@
+<?php
+$form = $this->form;
+?>
+<div class="control-group">
+    <?php $name = $form->get('developers'); ?>
+    <?php echo $this->formLabel($name); ?>
+    <div class="controls">
+        <?php echo $this->FormMultiCheckbox($name); ?>
+        <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+    </div>
+
+</div>

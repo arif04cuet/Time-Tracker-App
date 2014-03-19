@@ -1,0 +1,117 @@
+<?php
+$title = 'Edit Project';
+$this->headTitle($title);
+?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', '');
+$form->setAttribute('class', 'form-horizontal');
+
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->formInput($form->get('id'));
+echo $this->formElementErrors($form->get('id'));
+?>
+<fieldset>
+    <legend><?php echo $title; ?></legend>
+
+    <div class="control-group">
+	<?php $name = $form->get('title'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+
+    <div class="control-group">
+	<?php $name = $form->get('client'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formSelect($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+    <div class="control-group">
+	<?php $name = $form->get('status'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formSelect($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+    <div class="placeholder"></div>
+    <div class="control-group">
+	<?php $name = $form->get('submit'); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formInput($form->get('cancel')); ?>
+        </div>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+
+	var client_id = $("select#client").val();
+	var project_id = $("#id").val();
+	getDeveloperList(client_id, project_id);
+
+	$("form#project").on('load change', 'select.ajax', function() {
+	    var value = $(this).val();
+	    getDeveloperList(value, project_id);
+	});
+
+
+	function getDeveloperList(value, project_id)
+	{
+
+	    if (value == '')
+	    {
+		$("div.placeholder").empty().html(response);
+		return false;
+	    }
+
+	    // setup some local variables
+	    var $form = $("form#project");
+	    // let's select and cache all the fields
+	    var $inputs = $form.find("input, select, button, textarea");
+	    // serialize the data in the form
+	    var serializedData = $form.serialize();
+
+	    // let's disable the inputs for the duration of the ajax request
+	    $inputs.prop("disabled", true);
+
+	    // fire off the request to /form.php
+	    var request = $.ajax({
+		dataType: "html",
+		url: "<?php echo $this->url('ajax', array('action' => 'developerList')) ?>",
+		type: "post",
+		data: "client=" + value + "&project_id=" + project_id
+	    });
+
+	    // callback handler that will be called on success
+	    request.done(function(response, textStatus, jqXHR) {
+		$("div.placeholder").empty().html(response);
+	    });
+
+	    // callback handler that will be called on failure
+	    request.fail(function(jqXHR, textStatus, errorThrown) {
+		// log the error to the console
+		console.error(
+			"The following error occured: " +
+			textStatus, errorThrown
+			);
+	    });
+
+	    // callback handler that will be called regardless
+	    // if the request failed or succeeded
+	    request.always(function() {
+		// reenable the inputs
+		$inputs.prop("disabled", false);
+	    });
+	}
+    });
+
+</script>

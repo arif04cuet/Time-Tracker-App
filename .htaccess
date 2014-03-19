@@ -1,0 +1,6 @@
+RewriteEngine On
+        RewriteCond %{HTTP_HOST} ^clientarea.outsource24-7.com$ [OR]
+        RewriteCond %{HTTP_HOST} ^www.clientarea.outsource24-7.com$ [OR]
+        RewriteCond %{HTTP_HOST} ^outsource24-7.com$
+        RewriteCond %{REQUEST_URI} ^/$
+        RewriteRule ^(.*)$ http://www.outsource24-7.com/ [R=301,L]

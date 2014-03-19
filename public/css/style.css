@@ -1,0 +1,69 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.zf-green {
+    color: #68b604;
+}
+
+.btn-success {
+    background-color: #57a900;
+    background-image: -moz-linear-gradient(top, #70d900, #57a900);
+    background-image: -ms-linear-gradient(top, #70d900, #57a900);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
+    background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+    background-image: -o-linear-gradient(top, #70d900, #57a900);
+    background-image: linear-gradient(top, #70d900, #57a900);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+    background-color: #57a900;
+}
+
+.btn-success:active, .btn-success.active {
+    background-color: #57a900;
+}
+
+div.container a.brand {
+    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
+    margin-left: 0;
+    padding: 8px 20px 12px 40px;
+}
+
+ul.error li
+{
+    list-style: none;
+    color: red;
+}
+
+.block-header{margin-bottom: 5px;}
+div.list-header div.title{width: 90%;float: left;border-bottom: 1px solid gray;}
+
+div.list-header div.title h3{margin: 0;padding: 0}
+div.list-header div.add-button{width: 10%;float:right;}
+div.list-header div.add-button a.add{float:right;}
+.controls label.checkbox {width: 150px;float: left}
+
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+}
+
+table.table thead .sorting { background: url('../img/sort_both.png') no-repeat center right;background-color: lightcoral }
+table.table thead .sorting_asc { background: url('../img/sort_asc.png') no-repeat center right;background-color: lightcoral  }
+table.table thead .sorting_desc { background: url('../img/sort_desc.png') no-repeat center right; background-color: lightcoral }
+
+table.table thead .sorting_asc_disabled { background: url('../img/sort_asc_disabled.png') no-repeat center right; }
+table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_disabled.png') no-repeat center right; }
+table.dataTable tr.odd{background-color: #F9F9F9}
+table.dataTable tr.even{background-color: #fff!important}

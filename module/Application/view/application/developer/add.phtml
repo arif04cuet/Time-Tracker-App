@@ -1,0 +1,75 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', '');
+$form->setAttribute('class', 'form-horizontal');
+
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->formInput($form->get('id'));
+echo $this->formElementErrors($form->get('id'));
+?>
+<fieldset>
+    <legend>Add Developer</legend>
+
+    <div class="control-group">
+	<?php $name = $form->get('name'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+
+    <div class="control-group">
+	<?php $name = $form->get('email'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+    <div class="control-group">
+	<?php $name = $form->get('username'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+
+    <div class="control-group">
+	<?php $name = $form->get('password'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+
+
+    <div class="control-group">
+	<?php $name = $form->get('password_verify'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+    <div class="control-group">
+	<?php $name = $form->get('status'); ?>
+	<?php echo $this->formLabel($name); ?>
+        <div class="controls">
+	    <?php echo $this->formSelect($name); ?>
+	    <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+    <div class="control-group">
+	<?php $name = $form->get('submit'); ?>
+        <div class="controls">
+	    <?php echo $this->formInput($name); ?>
+	    <?php echo $this->formInput($form->get('cancel')); ?>
+        </div>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>
+

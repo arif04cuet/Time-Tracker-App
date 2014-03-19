@@ -1,0 +1,56 @@
+<?php
+$form = $this->form;
+?>
+
+<div class="control-group span2">
+    <?php $name = $form->get('client'); ?>
+    <?php echo $this->formLabel($name); ?>
+    <div class="controls">
+	<?php echo $this->formSelect($name); ?>
+	<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+    </div>
+</div>
+
+<div class="control-group span2">
+    <?php $name = $form->get('project'); ?>
+    <?php echo $this->formLabel($name); ?>
+    <div class="controls">
+	<?php echo $this->formSelect($name); ?>
+	<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+    </div>
+</div>
+<div class="control-group span2">
+    <?php $name = $form->get('developer'); ?>
+    <?php echo $this->formLabel($name); ?>
+    <div class="controls">
+	<?php echo $this->formSelect($name); ?>
+	<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+    </div>
+</div>
+<div class="control-group span2">
+    <?php $name = $form->get('from'); ?>
+    <?php echo $this->formLabel($name); ?>
+    <div class="controls">
+	<?php echo $this->formInput($name); ?>
+	<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+    </div>
+</div>
+
+<div class="control-group span2">
+    <?php $name = $form->get('to'); ?>
+    <?php echo $this->formLabel($name); ?>
+    <div class="controls">
+	<?php echo $this->formInput($name); ?>
+	<?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+    </div>
+</div>
+
+<div class="control-group span2">
+    <?php $name = $form->get('submit'); ?>
+    <label for="from" class="control-label"></label>
+    <div class="controls">
+	<?php echo $this->formInput($name); ?>
+	<?php echo $this->formInput($form->get('delete')); ?>
+    </div>
+</div>
+

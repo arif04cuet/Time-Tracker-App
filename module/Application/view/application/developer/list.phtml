@@ -1,0 +1,84 @@
+<?php
+$title = 'Developer List';
+$this->headTitle($title);
+$url = $this->url('add-developer');
+?>
+
+<div class='block'>
+    <div class="block-header left">
+
+	<?php echo $this->listHeader('Developer List', $url) ?>
+    </div>
+
+    <div class="block-content">
+
+        <div id="container">
+            <div id="dynamic">
+                <table cellpadding="0" cellspacing="0" border="0" class="display table table-condensed table-striped table-bordered datatable" id="datatable">
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate('ID') ?></th>
+                            <th><?php echo $this->translate('Username') ?></th>
+                            <th><?php echo $this->translate('Name') ?></th>
+                            <th><?php echo $this->translate('Email') ?></th>
+                            <th><?php echo $this->translate('Edit') ?></th>
+                            <th><?php echo $this->translate('Status') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="dataTables_empty">Loading data from server..</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // For validation
+    jQuery(document).ready(function($) {
+
+	//DataTable
+	$('table.datatable').dataTable({
+	    "bProcessing": true,
+	    "bDeferRender": true,
+	    "sDom": '<"top"fl>rt<"bottom"ip><"clear">',
+	    "sPaginationType": "full_numbers",
+	    //disable sorting
+	    "aoColumnDefs": [
+		{ 'bSortable': true, 'aTargets': ['_all']},
+		{ "bSearchable": false, "aTargets": [0, 2, 3, 4]},
+	    ],
+	    "fnDrawCallback": function(oSettings) {
+		$('#dataTables_filter input').attr("placeholder", "enter seach terms here");
+		$("#datatable_paginate a").each(function() {
+		    $(this).addClass('btn btn-danger');
+		});
+		$(".datatable a.del").click(function() {
+		    var del = confirm("are you want to delete");
+		    if (!del)
+			return false;
+		});
+	    },
+	    //"bServerSide": true,
+	    "oLanguage": {
+		"sLengthMenu": '<select>' +
+			'<option value="10">10</option>' +
+			'<option value="20">20</option>' +
+			'<option value="30">30</option>' +
+			'<option value="40">40</option>' +
+			'<option value="50">50</option>' +
+			'<option value="-1">All</option>' +
+			'</select>',
+		"sSearch": ""
+	    },
+	    "fnServerParams": function(aoData) {
+		aoData.push({ "name": "client", "value": "<?php echo $client ?>"});
+		aoData.push({ "name": "userType", "value": "3"});
+		aoData.push({ "name": "route", "value": "developer"});
+	    },
+	    "sAjaxSource": "<?php echo $this->url('ajax', array('action' => 'user-list')) ?>"
+	});
+    });
+</script>

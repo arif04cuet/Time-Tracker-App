@@ -1,0 +1,48 @@
+<?php
+$title = 'Login';
+$this->headTitle($title);
+?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', '');
+$form->setAttribute('class', 'form-horizontal');
+
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<?php if ($this->error): ?>
+    <div class="alert alert-error">  
+        <a class="close" data-dismiss="alert">×</a>  
+        <?php echo $this->error ?>
+    </div> 
+<?php endif; ?>
+<fieldset>
+    <legend><?php echo $title ?></legend>
+
+    <div class="control-group">
+        <?php $name = $form->get('username'); ?>
+        <?php echo $this->formLabel($name); ?>
+        <div class="controls">
+            <?php echo $this->formInput($name); ?>
+            <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <?php $name = $form->get('password'); ?>
+        <?php echo $this->formLabel($name); ?>
+        <div class="controls">
+            <?php echo $this->formInput($name); ?>
+            <?php echo $this->formElementErrors($name, array('class' => "error")); ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <?php $name = $form->get('submit'); ?>
+        <div class="controls">
+            <?php echo $this->formInput($name); ?>
+
+        </div>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>
+
